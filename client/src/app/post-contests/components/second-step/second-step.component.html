@@ -1,0 +1,236 @@
+<div class="container">
+    <h4>
+        <b>Add New Contest Brief</b>
+    </h4>
+    <br/>
+    <div class="row">
+        <div class="col-md-4 mr-auto ml-auto">Logo</div>
+        <div class="col-md-8 mr-auto ml-auto">
+            <input type="file" (change)="fileChangeEvent($event,content)" *ngIf='!croppedImage' />
+            <div *ngIf='croppedImage'>
+                <div *ngIf='!imagePath'>
+                  <div class="lds-ellipsis">
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                    </div>
+                </div>
+                <div *ngIf='imagePath'>
+                    <img *ngIf='croppedImage' [src]="croppedImage" />
+                    <span style='color:red ; cursor: pointer;' (click)='updateImage()'>
+                        <b>Update Logo</b>
+                    </span>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <br/>
+    <div class="row">
+        <div class="col-md-4 mr-auto ml-auto" style='padding-left:0px'>Category</div>
+        <div class="col-md-7 mr-auto ml-auto" style='padding-left:0px'>
+            <select class="form-control" [(ngModel)]='newCategory'>
+                <option *ngFor='let categories of categories'>{{categories.name}}</option>
+            </select>
+        </div>
+    </div>
+    <br/>
+    <div class="row">
+        <div class="col-md-4 mr-auto ml-auto">Name</div>
+        <div class="col-md-8 mr-auto ml-auto">
+            <input type="text" class="form-control" [(ngModel)]='newName'>
+        </div>
+    </div>
+    <br/>
+    <div class="row">
+        <div class="col-md-12 mr-auto ml-auto">
+            <ngb-tabset>
+                <ngb-tab>
+                    <ng-template ngbTabTitle>
+                        <b>Description</b>
+                    </ng-template>
+                    <ng-template ngbTabContent>
+                        <div class="row">
+                            <div class="col-md-12 mr-auto ml-auto">Enter Description</div>
+                            <div class="col-md-12 mr-auto ml-auto">
+                                <ckeditor [(ngModel)]="description" debounce="500">
+                                    <p>Hello
+                                        <strong>world</strong>
+                                    </p>
+                                </ckeditor>
+                            </div>
+                        </div>
+
+                    </ng-template>
+                </ngb-tab>
+                <ngb-tab>
+                    <ng-template ngbTabTitle>
+                        <b>Rules</b>
+                    </ng-template>
+                    <ng-template ngbTabContent>
+                        <div class="row">
+                            <div class="col-md-12 mr-auto ml-auto">Enter Rules</div>
+                            <div class="col-md-12 mr-auto ml-auto">
+                                <ckeditor [(ngModel)]="rules" debounce="500">
+                                    <p>Hello
+                                        <strong>world</strong>
+                                    </p>
+                                </ckeditor>
+                            </div>
+                        </div>
+
+                    </ng-template>
+                </ngb-tab>
+                <ngb-tab>
+                    <ng-template ngbTabTitle>
+                        <b>Help guide</b>
+                    </ng-template>
+                    <ng-template ngbTabContent>
+                        <div class="row">
+                            <div class="col-md-12 mr-auto ml-auto">Enter Help Guide Here</div>
+                            <div class="col-md-12 mr-auto ml-auto">
+                                <ckeditor [(ngModel)]="guide" debounce="500">
+                                    <p>Hello
+                                        <strong>world</strong>
+                                    </p>
+                                </ckeditor>
+                            </div>
+                        </div>
+
+                    </ng-template>
+                </ngb-tab>
+                <ngb-tab>
+                    <ng-template ngbTabTitle>
+                        <b>Awards</b>
+                    </ng-template>
+                    <ng-template ngbTabContent>
+                        <div class="row">
+                            <div class="col-md-10 mr-auto ml-auto">
+                                <input type="text" class="form-control" #item [(ngModel)]='awarddesc'>
+                            </div>
+                            <div class="col-md-2 mr-auto ml-auto">
+                                <button type="button" class="btn btn-outline-primary" (click)='addItem(item.value)'>+</button>
+                            </div>
+                        </div>
+                        <br/>
+                        <div class="row">
+                            <div class="col-md-6 mr-auto ml-auto">
+                                <p>This Contest has {{awards.length}} awards.</p>
+                            </div>
+                        </div>
+                        <br/>
+
+                        <div class="row" *ngFor='let award of awards'>
+                            <div class="col-md-5 mr-auto ml-auto">
+                                <p>Award - {{award.id}}</p>
+                            </div>
+                            <div class="col-md-6 mr-auto ml-auto">
+                                <p>{{award.name}}</p>
+                            </div>
+                            <div class="col-md-1 mr-auto ml-auto">
+                                <p style='color:red;cursor:pointer'>X</p>
+                            </div>
+                        </div>
+
+                        <div class="row" *ngIf='(awards.length > 0)'>
+                            <div class="col-md-12 mr-auto ml-auto">
+                                <button type="button" class="btn btn-warning" (click)='resetAwards()'>Set Awards Again</button>
+                            </div>
+                        </div>
+
+
+
+                    </ng-template>
+                </ngb-tab>
+            </ngb-tabset>
+        </div>
+    </div>
+
+    <br/>
+    <div class="row">
+        <div class="col-md-4 mr-auto ml-auto">
+            <b>Time Line</b>
+        </div>
+        <div class="col-md-8 mr-auto ml-auto">
+        </div>
+    </div>
+    <br/>
+    <div class="row">
+        <div class="col-md-3 mr-auto ml-auto"> Start Date</div>
+        <div class="col-md-3 mr-auto ml-auto">
+            <div class="input-group date">
+                <input class="form-control" placeholder="yyyy-mm-dd" name="dp" [(ngModel)]="startdate" ngbDatepicker #dd="ngbDatepicker"
+                    (click)="dd.toggle()">
+                <span class="input-group-addon">
+                    <span class="glyphicon glyphicon-calendar">
+                        <i class="fa fa-calendar" aria-hidden="true"></i>
+                    </span>
+                </span>
+            </div>
+        </div>
+        <div class="col-md-3 mr-auto ml-auto"> End Date</div>
+        <div class="col-md-3 mr-auto ml-auto">
+            <div class="input-group date">
+                <input class="form-control" placeholder="yyyy-mm-dd" name="dp" [(ngModel)]="enddate" ngbDatepicker #d="ngbDatepicker" (click)="d.toggle()">
+                <span class="input-group-addon">
+                    <span class="glyphicon glyphicon-calendar">
+                        <i class="fa fa-calendar" aria-hidden="true"></i>
+                    </span>
+                </span>
+            </div>
+        </div>
+    </div>
+
+    <br/>
+    <br/>
+    <div class="row">
+        <div class="col-md-6 mr-auto ml-auto"></div>
+        <div class="col-md-6 mr-auto ml-auto">
+            <div class="form-group">
+                <button (click)='saveContest()' [disabled]='!imagePath' style='color:#FFFFFF' class="btn btn-danger btn-round btn-area">Add Contest</button>
+            </div>
+        </div>
+    </div>
+    <br/>
+    <div class='row' *ngIf='visibleAlerts'>
+        <div class="col-md-12 mr-auto ml-auto">
+            <ngb-alert [type]="alertType" [dismissible]="false">
+                <div class="container">
+                    {{ alertMessage }}
+                    <button type="button" name="button" class="close" (click)="closeAlert(alert)">
+                        <i class="nc-icon nc-simple-remove"></i>
+                    </button>
+                </div>
+            </ngb-alert>
+        </div>
+    </div>
+</div>
+
+
+<!-- <input type="text" [(ngModel)]="config.bucket" placeholder="The S3 Bucket"/><br/>
+<input type="text" [(ngModel)]="config.accessKey" placeholder="Your Access Key"/><br/>
+<input type="text" [(ngModel)]="config.secretAccessKey" placeholder="Your Secret Access Key"/><br/>
+<input type="text" [(ngModel)]="config.region" placeholder="The Region of the Bucket"/><br/> -->
+<!-- <input type="file" (change)="upload($event)"/><br/>
+<img *ngIf="imagePath" [src]="imagePath"> -->
+
+
+
+<ng-template #content let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <p style='color:#FFFFFF'>
+            <b>Crop Your Logo</b>
+        </p>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <image-cropper [imageChangedEvent]="imageChangedEvent" [maintainAspectRatio]="true" [aspectRatio]="4 / 4" [resizeToWidth]="128"
+            format="png" (imageCropped)="imageCropped($event)" (loadImageFailed)="loadImageFailed()"></image-cropper>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-outline-light" (click)="c('Close click')">Save</button>
+    </div>
+</ng-template>

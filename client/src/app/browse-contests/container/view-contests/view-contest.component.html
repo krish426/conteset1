@@ -1,0 +1,452 @@
+<div class="wrapper" *ngIf='user && selectedContest'>
+    <div class="page-header page-header-xs" data-parallax="true" style="background-image: url('../assets/img/fabio-mangione.jpg');">
+        <div class="filter"></div>
+    </div>
+    <div class="section profile-content">
+        <div class="container">
+            <div class="owner">
+                <div class="avatar">
+                    <img src="{{ selectedContest.image }}" alt="Circle Image" class="img-circle img-no-padding img-responsive">
+                </div>
+                <div class="name">
+
+                    <h3 class="title">
+                        <span *ngIf='!titleEditable'>{{ selectedContest.name }}</span>&nbsp;
+                        <i *ngIf='user.id==selectedContest.user.id' class="edit-icon nc-icon nc-ruler-pencil" (click)='editTitle()'></i>
+                        <div class="row" style='padding-left:15%;padding-right: 15%;' *ngIf='titleEditable'>
+                            <div class="col-sm-12">
+                                <input type="text" class="form-control" id="usr" style='width:100%;text-align:center' [(ngModel)]='selectedContest.name'>
+                                <br/>
+                                <button type="button" class="btn btn-outline-primary" (click)='updateTitle(selectedContest.name)'>Save</button>
+                            </div>
+                        </div>
+
+                    </h3>
+                    <p *ngIf='!(user.id==selectedContest.user.id)'>Created By: {{selectedContest.user.name}}</p>
+                </div>
+            </div>
+
+            <div class="row" *ngIf='selectedContest.winner'>
+                <div class="col-sm-12" style='text-align:center'>
+                    <h5>Congratulations {{selectedContest.winner}} won this Contest</h5>
+                </div>
+            </div>
+            <br/>
+            <div class="row">
+                <div class="col-sm-12" style='text-align:center'>
+                    <span class="badge badge-success" *ngIf="selectedContest.status=='Open'">Open</span>
+                    <span class="badge badge-warning" *ngIf="selectedContest.status=='Inprocess'">Inprocess</span>
+                    <span class="badge badge-danger" *ngIf="selectedContest.status=='Cloased'">Closed</span>
+                </div>
+            </div>
+
+            <div class="main" *ngIf='!(user.id==selectedContest.user.id)'>
+                <div class="section text-center" style='padding-top:5px;padding-bottom:5px;'>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-6" style='text-align:right'>
+                                <button type="button" class="btn btn-primary" *ngIf='!isFollow' (click)='followContest()'>Follow Contest</button>
+                                <button type="button" class="btn btn-primary" *ngIf='isFollow' (click)='unFollowContest()'>Unfollow Contest</button>
+                            </div>
+                            <div class="col-md-6" style='text-align:left'>
+                                <button type="button" class="btn btn-outline-danger" (click)="reportContest(report)">Report Contest</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="main" *ngIf='user.id==selectedContest.user.id'>
+                <div class="section text-center" style='padding-top:5px;padding-bottom:5px;'>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-12" style='text-align:center'>
+                                <button type="button" class="btn btn-outline-dark" style='color:#403D39' (click)='manageContest(manage)'>Manage Contest</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="main" style='text-align:center !important'>
+                <div class="section text-center">
+                    <div class="container">
+                        <div class="row" style='text-align:center !important'>
+                            <div class="col-md-3" style='text-align:center !important'>
+                                <div class="info">
+                                    <div class="icon icon-danger">
+                                        <i class="nc-icon nc-money-coins"></i>
+                                    </div>
+                                    <div class="description">
+                                        <h4 class="info-title">Awards</h4>
+                                        <h5 class="description">{{selectedContest.awards.length}}</h5>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3" style='text-align:center !important'>
+                                <div class="info">
+                                    <div class="icon icon-danger">
+                                        <i class="nc-icon nc-paper"></i>
+                                    </div>
+                                    <div class="description">
+                                        <h4 class="info-title">Contest Posted</h4>
+                                        <h5 class="description">0</h5>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3" style='text-align:center !important'>
+                                <div class="info">
+                                    <div class="icon icon-danger">
+                                        <i class="nc-icon nc-spaceship"></i>
+                                    </div>
+                                    <div class="description">
+                                        <h4 class="info-title">Start Date</h4>
+                                        <h5 class="description">{{selectedContest.startdate}}</h5>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3" style='text-align:center !important'>
+                                <div class="info">
+                                    <div class="icon icon-danger">
+                                        <i class="nc-icon nc-user-run"></i>
+                                    </div>
+                                    <div class="description">
+                                        <h4 class="info-title">End Date</h4>
+                                        <h5 class="description">{{selectedContest.enddate}}</h5>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="nav-tabs-navigation">
+                    <div class="nav-tabs-wrapper">
+                        <ngb-tabset [justify]="'center'">
+                            <ngb-tab title="Dashboard">
+                                <ng-template ngbTabContent>
+                                    <div class="container">
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <p *ngIf='!selectedContest.timeline'>Timeline not avalable this moment</p>
+                                                <div class="item" *ngFor='let timeline of selectedContest.timeline'>
+                                                    <span class="glyphicon glyphicon-ok"></span>
+                                                    <div>{{timeline.date}}</div>
+                                                    <p>
+                                                        {{timeline.description}}
+                                                    </p>
+                                                </div>
+
+                                            </div>
+                                            <div class="col-sm-6" style='text-align:left !important'>
+                                                <div class="row">
+                                                    <div class="col-sm-12">
+                                                        <h3>Description &nbsp;
+                                                            <i *ngIf='user.id==selectedContest.user.id' class="edit-icon nc-icon nc-ruler-pencil" (click)='changeDescriptionEditable()'></i>
+                                                        </h3>
+                                                    </div>
+                                                    <br/>
+                                                    <div class="col-sm-12">
+                                                        <div *ngIf='discriptionEditable'>
+                                                            <ckeditor [(ngModel)]="selectedContest.description" debounce="500">
+                                                                <p>Hello
+                                                                    <strong>world</strong>
+                                                                </p>
+                                                            </ckeditor>
+                                                            <br/>
+                                                            <button type="button" class="btn btn-outline-primary" (click)='updateDiscription(selectedContest.description)'>Save</button>
+                                                        </div>
+                                                        <div *ngIf='!discriptionEditable'>
+                                                            <div [innerHTML]="selectedContest.description"> </div>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                                <br/>
+                                                <div class="row">
+                                                    <div class="col-sm-12">
+                                                        <h3>Awards &nbsp;
+                                                            <i *ngIf='user.id==selectedContest.user.id' class="edit-icon nc-icon nc-ruler-pencil" (click)='editAwards()'></i>
+                                                        </h3>
+                                                    </div>
+                                                    <br/>
+                                                    <div class="col-sm-12">
+                                                        <div class="row" *ngFor='let award of selectedContest.awards'>
+                                                            <div class="col-sm-4">
+                                                                <p>Award {{award.id}}</p>
+                                                            </div>
+                                                            <div class="col-sm-8">
+                                                                <p *ngIf='!awardsEditable'>{{award.name}}</p>
+                                                                <span *ngIf='awardsEditable'>
+                                                                    <input type="text" class="form-control" [(ngModel)]='award.name'>
+                                                                </span>
+
+                                                            </div>
+                                                        </div>
+                                                        <button *ngIf='awardsEditable' type="button" class="btn btn-outline-primary" (click)='updateAwards(selectedContest.awards)'>Save</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </ng-template>
+                            </ngb-tab>
+                            <ngb-tab title="Forum">
+                                <ng-template ngbTabContent>
+                                    <div *ngIf='selectedContest'>
+                                        <div class="row" *ngIf='!(selectedContest.comment)'>
+                                            <div class="col-md-12 mr-auto ml-auto">
+                                                <p>There haven't previous messages</p>
+                                                <br/>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="containerc" *ngFor='let comment of selectedContest.comment'>
+                                        <img src="{{comment.image}}" alt="Avatar" style="width:100%;">
+                                        <p>{{comment.msg}}</p>
+                                        <span class="time-right">{{comment.time}}</span>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-10 mr-auto ml-auto">
+                                            <div class="form-group">
+                                                <textarea class="form-control" rows="5" id="comment" [(ngModel)]='comment'></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2 mr-auto ml-auto">
+                                            <button type="button" class="btn btn-dark" (click)='addComment()'>Send</button>
+                                        </div>
+                                    </div>
+
+
+
+                                </ng-template>
+                            </ngb-tab>
+                            <ngb-tab title="Participations">
+                                <ng-template ngbTabContent>
+                                    <div class="row" *ngIf='!(selectedContest.followers)'>
+                                        <div class="col-md-12 mr-auto ml-auto">
+                                            <h3 class="text-muted">Not following anyone yet :(</h3>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6 mr-auto ml-auto" *ngFor='let follower of selectedContest.followers'>
+                                            <div class="card">
+                                                <div class="card-body">
+                                                    <div class="row">
+                                                        <div class="col-md-4 mr-auto ml-auto">
+                                                            <img class="card-img-top" src="{{follower.image}}" alt="Card image" style="width:100%">
+                                                        </div>
+                                                        <div class="col-md-8 mr-auto ml-auto">
+                                                            <h4 class="card-title">{{follower.name}}</h4>
+                                                            <p class="card-text">{{follower.email}}</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+                                </ng-template>
+                            </ngb-tab>
+                            <ngb-tab title="Tasks Posting">
+                                <ng-template ngbTabContent>
+                                    <div class="row">
+                                        <div class="col-md-6 mr-auto ml-auto">
+                                            Upload the File
+                                        </div>
+                                        <div class="col-md-6 mr-auto ml-auto">
+                                            <input type="file" (change)="upload($event)" [(ngModel)]='myfile' />
+                                        </div>
+                                    </div>
+                                    <br/>
+                                    <div class="row">
+                                        <div class="col-md-6 mr-auto ml-auto"></div>
+                                        <div class="col-md-6 mr-auto ml-auto">
+                                            <button type="button" class="btn btn-danger" (click)='uploadPost()'>Upload File</button>
+                                        </div>
+                                    </div>
+                                    <br/>
+                                    <div class="row">
+                                        <div class="col-md-12 mr-auto ml-auto" *ngIf='visibleAlerts'>
+                                            <ngb-alert [type]="alertType" [dismissible]="false">
+                                                <div class="container">
+                                                    {{ alertMessage }}
+                                                </div>
+                                            </ngb-alert>
+                                        </div>
+                                    </div>
+                                    <br/>
+                                    <div class="row" *ngIf='user.id==selectedContest.user.id'>
+                                        <div class="col-md-12 mr-auto ml-auto">
+                                            <table class="table table-striped">
+                                                <thead>
+                                                    <tr style='text-align:center'>
+                                                        <th>Uploader Name</th>
+                                                        <th>Date</th>
+                                                        <th>Download it</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr *ngIf='!selectedContest.uploads'>
+                                                        <td colspan="3">No download links Avalable</td>
+                                                    </tr>
+                                                    <tr *ngFor='let file of selectedContest.uploads'>
+                                                        <td>{{file.user.name}}</td>
+                                                        <td>{{file.date}}</td>
+                                                        <td>
+                                                            <a [href]='file.path' target="_blank">
+                                                                <i class="nc-icon nc-cloud-download-93"></i>
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </ng-template>
+                            </ngb-tab>
+                            <ngb-tab title="Brief">
+                                <ng-template ngbTabContent>
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <h3>Rules &nbsp;
+                                                        <i *ngIf='user.id==selectedContest.user.id' class="edit-icon nc-icon nc-ruler-pencil" (click)='changeRulesEditable()'></i>
+                                                    </h3>
+                                                </div>
+                                                <br/>
+                                                <div class="col-sm-12">
+                                                    <div *ngIf='rulesEditable'>
+                                                        <ckeditor [(ngModel)]="selectedContest.rules" debounce="500">
+                                                            <p>Hello
+                                                                <strong>world</strong>
+                                                            </p>
+                                                        </ckeditor>
+                                                        <br/>
+                                                        <button type="button" class="btn btn-outline-primary" (click)='updateRules(selectedContest.rules)'>Save</button>
+                                                    </div>
+                                                    <div *ngIf='!rulesEditable'>
+                                                        <div [innerHTML]="selectedContest.rules"> </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <br/>
+                                        <div class="col-sm-6">
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <h3>Help Guide &nbsp;
+                                                        <i *ngIf='user.id==selectedContest.user.id' class="edit-icon nc-icon nc-ruler-pencil" (click)='changeHelpGuideEditable()'></i>
+                                                    </h3>
+                                                </div>
+                                                <br/>
+                                                <div class="col-sm-12">
+                                                    <div *ngIf='helpGuideEditble'>
+                                                        <ckeditor [(ngModel)]="selectedContest.guide" debounce="500">
+                                                            <p>Hello
+                                                                <strong>world</strong>
+                                                            </p>
+                                                        </ckeditor>
+                                                        <br/>
+                                                        <button type="button" class="btn btn-outline-primary" (click)='updateHelpGuide(selectedContest.guide)'>Save</button>
+                                                    </div>
+                                                    <div *ngIf='!helpGuideEditble'>
+                                                        <div [innerHTML]="selectedContest.guide"> </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </ng-template>
+                            </ngb-tab>
+                        </ngb-tabset>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<ng-template #report let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <p>
+            <b>Report This Contest</b>
+        </p>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-sm-5">
+                <label>Title</label>
+            </div>
+            <div class="col-sm-7">
+                <input type="text" class="form-control">
+            </div>
+        </div>
+        <br/>
+        <div class="row">
+            <div class="col-sm-5">
+                <label>Description</label>
+            </div>
+            <div class="col-sm-7">
+                <textarea class="form-control" rows="3" id="comment"></textarea>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer" style='padding:10px;'>
+        <button type="button" class="btn btn-danger" (click)="c('Close click')">Report</button>
+
+    </div>
+</ng-template>
+
+
+<ng-template #manage let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <p>Manage Contest</p>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-sm-5">
+                <label>Status Of Contest</label>
+            </div>
+            <div class="col-sm-7">
+                <select class="form-control" [(ngModel)]='contestStatus'>
+                    <option>Open</option>
+                    <option>Inprocess</option>
+                    <option>Cloased</option>
+                </select>
+            </div>
+        </div>
+        <br/>
+        <div class="row">
+            <div class="col-sm-5">
+                <label>Select a Winner</label>
+            </div>
+            <div class="col-sm-7">
+                <select class="form-control" [(ngModel)]='winner' (ngModelChange)='changeWinner()'>
+                    <option disabled>Select One</option>
+                    <option *ngFor='let follower of selectedContest.followers'>{{follower.name}}</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer" style='padding:10px'>
+        <button type="button" class="btn btn-danger" (click)="saveManageData()">Save</button>
+    </div>
+</ng-template>

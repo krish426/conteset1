@@ -1,0 +1,83 @@
+<div class="page-header" data-parallax="true" style="background-image: url('../assets/img/daniel-olahh.jpg');">
+    <div class="filter"></div>
+    <div class="container">
+        <div class="motto text-center">
+            <h1>Post your contest</h1>
+            <h3>What do you want to launch?</h3>
+            <br />
+        </div>
+    </div>
+</div>
+<div class="main">
+    <div class="section text-center">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 mr-auto ml-auto">
+                    <h2 class="title">Let's Post Your Contest</h2>
+                    <h5 class="description">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's
+                        standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled
+                        it to make a type specimen book. It has survived not only five centuries, but also the leap into
+                        electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the
+                        release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing
+                        software like Aldus PageMaker including versions of Lorem Ipsum.</h5>
+                    <br>
+                </div>
+            </div>
+        </div>
+
+
+
+        <!-- <div class="section section-dark text-center">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="card deactive-item">
+                            <div class="card-block">
+                                <h3 [style.font-size]='step1font'>Step 1</h3>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="card deactive-item">
+                            <div class="card-block">
+                                <h3  [style.font-size]='step2font'>Step 2</h3>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="card deactive-item">
+                            <div class="card-block">
+                                <h3 [style.font-size]='step3font'>Step 3</h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+<br/><br/> -->
+
+        <div class="container" *ngIf='!user'>
+            <div class="row">
+                <div class="col-md-8 mr-auto ml-auto">
+                    <button (click)='navigatetologin()'  style='color:#FFFFFF' class="btn btn-danger btn-round btn-area">You are not Logging Please loggin before Post</button>
+                    <br/>
+                    <br/>
+                </div>
+            </div>
+        </div>
+
+
+
+        <div class="container" *ngIf='user'>
+            <div class="row">
+                <div class="col-md-8 mr-auto ml-auto">
+                    <!-- <first-step *ngIf='step1visible'></first-step> -->
+                    <second-step></second-step>
+                    <!-- <third-step  *ngIf='step3visible'></third-step> -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

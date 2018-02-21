@@ -1,0 +1,254 @@
+<div class="page-header" data-parallax="true" style="background-image: url('../assets/img/daniel-olahh.jpg');">
+    <div class="filter"></div>
+    <div class="container">
+        <div class="motto text-center">
+            <h1>Browse The Contest</h1>
+            <h3>What do you want to launch?</h3>
+            <br />
+        </div>
+    </div>
+</div>
+<div class="main">
+    <div class="section text-center">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 mr-auto ml-auto">
+                    <h2 class="title">Let's Browse it</h2>
+                    <h5 class="description">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's
+                        standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled
+                        it to make a type specimen book. It has survived not only five centuries, but also the leap into
+                        electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the
+                        release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing
+                        software like Aldus PageMaker including versions of Lorem Ipsum.</h5>
+                    <br>
+                </div>
+            </div>
+            <br/>
+            <br/>
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-sm-8">
+                        <ngb-tabset>
+                            <ngb-tab>
+                                <ng-template ngbTabTitle>
+                                    <b>Open</b>
+                                </ng-template>
+                                <ng-template ngbTabContent>
+                                    <div class="row" style='text-align:center' *ngIf='loading'>
+                                        <div class="col-sm-12">
+                                            <div class="lds-roller">
+                                                <div></div>
+                                                <div></div>
+                                                <div></div>
+                                                <div></div>
+                                                <div></div>
+                                                <div></div>
+                                                <div></div>
+                                                <div></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                            <div class="col-sm-12" style='text-align:center' *ngIf='openContests.length<1'>
+                                                <p>Sorry! There haven't Open Contest at this moment</p>
+                                            </div>
+                                    </div>
+
+                                    <div class="card" *ngFor='let contest of openContests| paginate: { itemsPerPage: 5, currentPage: p }' (click)='checkLogin(contest._id)'>
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col-sm-3">
+                                                    <img class='contest-logo' [src]='contest.image'>
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    <h3>{{contest.name}}</h3>
+                                                    <p>{{contest.user.name}}</p>
+                                                </div>
+                                                <div class="col-sm-3" style='padding-top:4%'>
+                                                    <h6>Ends On</h6>
+                                                    <h6>{{contest.enddate}}</h6>
+                                                </div>
+                                                <div class="col-sm-2" style='padding-top:4%'>
+                                                    <span class="badge badge-success" *ngIf="contest.status=='Open'">Open</span>
+                                                    <span class="badge badge-warning" *ngIf="contest.status=='Inprocess'">Inprocess</span>
+                                                    <span class="badge badge-danger" *ngIf="contest.status=='Cloased'">Closed</span>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <br/>
+                                    <pagination-controls (pageChange)="p = $event"></pagination-controls>
+                                </ng-template>
+                            </ngb-tab>
+                            <ngb-tab>
+                                <ng-template ngbTabTitle>
+                                    <b>Inprocess</b>
+                                </ng-template>
+                                <ng-template ngbTabContent>
+                                    <div class="row" style='text-align:center' *ngIf='loading'>
+                                        <div class="col-sm-12">
+                                            <div class="lds-roller">
+                                                <div></div>
+                                                <div></div>
+                                                <div></div>
+                                                <div></div>
+                                                <div></div>
+                                                <div></div>
+                                                <div></div>
+                                                <div></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                            <div class="col-sm-12" style='text-align:center' *ngIf='inprocessContests.length<1'>
+                                                <p>Sorry! There haven't Inprocess Contest at this moment</p>
+                                            </div>
+                                    </div>
+
+                                    <div class="card" *ngFor='let contest of inprocessContests| paginate: { itemsPerPage: 5, currentPage: p }' (click)='checkLogin(contest._id)'>
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col-sm-3">
+                                                    <img class='contest-logo' [src]='contest.image'>
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    <h3>{{contest.name}}</h3>
+                                                    <p>{{contest.user.name}}</p>
+                                                </div>
+                                                <div class="col-sm-3" style='padding-top:4%'>
+                                                    <h6>Ends On</h6>
+                                                    <h6>{{contest.enddate}}</h6>
+                                                </div>
+                                                <div class="col-sm-2" style='padding-top:4%'>
+                                                    <span class="badge badge-success" *ngIf="contest.status=='Open'">Open</span>
+                                                    <span class="badge badge-warning" *ngIf="contest.status=='Inprocess'">Inprocess</span>
+                                                    <span class="badge badge-danger" *ngIf="contest.status=='Cloased'">Closed</span>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <br/>
+                                    <pagination-controls (pageChange)="p = $event"></pagination-controls>
+                                </ng-template>
+                            </ngb-tab>
+                            <ngb-tab>
+                                <ng-template ngbTabTitle>
+                                    <b>Cloased</b>
+                                </ng-template>
+                                <ng-template ngbTabContent>
+                                    <div class="row" style='text-align:center' *ngIf='loading'>
+                                        <div class="col-sm-12">
+                                            <div class="lds-roller">
+                                                <div></div>
+                                                <div></div>
+                                                <div></div>
+                                                <div></div>
+                                                <div></div>
+                                                <div></div>
+                                                <div></div>
+                                                <div></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                            <div class="col-sm-12" style='text-align:center' *ngIf='cloasedContests.length<1'>
+                                                <p>Sorry! There haven't Cloased Contest at this moment</p>
+                                            </div>
+                                    </div>
+                                    <div class="card" *ngFor='let contest of cloasedContests| paginate: { itemsPerPage: 5, currentPage: p }' (click)='checkLogin(contest._id)'>
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col-sm-3">
+                                                    <img class='contest-logo' [src]='contest.image'>
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    <h3>{{contest.name}}</h3>
+                                                    <p>{{contest.user.name}}</p>
+                                                </div>
+                                                <div class="col-sm-3" style='padding-top:4%'>
+                                                    <h6>Ends On</h6>
+                                                    <h6>{{contest.enddate}}</h6>
+                                                </div>
+                                                <div class="col-sm-2" style='padding-top:4%'>
+                                                    <span class="badge badge-success" *ngIf="contest.status=='Open'">Open</span>
+                                                    <span class="badge badge-warning" *ngIf="contest.status=='Inprocess'">Inprocess</span>
+                                                    <span class="badge badge-danger" *ngIf="contest.status=='Cloased'">Closed</span>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <br/>
+                                    <pagination-controls (pageChange)="p = $event"></pagination-controls>
+                                </ng-template>
+                            </ngb-tab>
+                            <ngb-tab>
+                                <ng-template ngbTabTitle>
+                                    <b>All</b>
+                                </ng-template>
+                                <ng-template ngbTabContent>
+                                    <div class="row" style='text-align:center' *ngIf='loading'>
+                                        <div class="col-sm-12">
+                                            <div class="lds-roller">
+                                                <div></div>
+                                                <div></div>
+                                                <div></div>
+                                                <div></div>
+                                                <div></div>
+                                                <div></div>
+                                                <div></div>
+                                                <div></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                            <div class="col-sm-12" style='text-align:center' *ngIf='contests.length<1'>
+                                                <p>Sorry! There haven't any Contest at this moment</p>
+                                            </div>
+                                    </div>
+                                    <div class="card" *ngFor='let contest of contests| paginate: { itemsPerPage: 5, currentPage: p }' (click)='checkLogin(contest._id)'>
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col-sm-3">
+                                                    <img class='contest-logo' [src]='contest.image'>
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    <h3>{{contest.name}}</h3>
+                                                    <p>{{contest.user.name}}</p>
+                                                </div>
+                                                <div class="col-sm-3" style='padding-top:4%'>
+                                                    <h6>Ends On</h6>
+                                                    <h6>{{contest.enddate}}</h6>
+                                                </div>
+                                                <div class="col-sm-2" style='padding-top:4%'>
+                                                    <span class="badge badge-success" *ngIf="contest.status=='Open'">Open</span>
+                                                    <span class="badge badge-warning" *ngIf="contest.status=='Inprocess'">Inprocess</span>
+                                                    <span class="badge badge-danger" *ngIf="contest.status=='Cloased'">Closed</span>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <br/>
+                                    <pagination-controls (pageChange)="p = $event"></pagination-controls>
+                                </ng-template>
+                            </ngb-tab>
+                        </ngb-tabset>
+                    </div>
+                    <div class="col-sm-4">
+                        <browse-categories></browse-categories>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+</div>

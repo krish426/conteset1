@@ -1,0 +1,8 @@
+<div class="jumbotron">
+        <p class='category-item' (click)='filterContests("All Categories")'>All Categories ({{contests.length}})</p>
+        <p class='category-item' *ngFor='let chategorie of chategories'>
+                <span (click)='filterContests(chategorie.name)'>
+                        {{chategorie.name}} ({{chategorie.count}})
+                </span>
+        </p>
+</div>

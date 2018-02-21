@@ -1,0 +1,35 @@
+Instructions to setup server
+
+1 - open server/routes/tasks.js and change mongo path
+	var db =mongojs('mongodb://chamath:123456@ds239648.mlab.com:39648/contest-application',['contests']);
+2 - open terminal on server folder and enter npm install
+3 - after enter 'node server' command to run project
+
+Instructions to setup angular project
+
+// for deploy in development mode
+prerequesits;
+1-node version higher than 6
+2-npm version higher  than 3
+3-angular-cli install in globally
+
+instructions
+1 - open client folder and enter 'npm install'
+2 - open client/src/app/app.module.ts file and change auth keys of facebook and google as below
+	new GoogleLoginProvider('465359889137-08nj2n2mk68escgfma54e4gca4et2059.apps.googleusercontent.com')
+  
+	id: FacebookLoginProvider.PROVIDER_ID,
+    provider: new FacebookLoginProvider('405068646590823')
+
+3 - after open terminal on client folder and enter 'ng serve'
+
+//production mode
+1- open termial on client folder and enter 'ng build'
+2- then generete dist folder inside client folder (I have already added it to client folder)
+3- open index.html file and change basepath to -->'/'-->''
+4- copy dist folder in to appache server
+	ex- wamp-www, xampp-htdoc
+5- open project in browser
+
+//data base
+create a intence named 'contest' and add that path to server 
