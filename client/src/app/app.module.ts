@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { RouterModule } from '@angular/router';
 import { AppRoutingModule } from './app.routing';
-import { SocialLoginModule } from 'angularx-social-login';
+import { SocialLoginModule } from 'angularx-social-login'; 
 import { HttpModule } from '@angular/http';
 import { AuthServiceConfig, GoogleLoginProvider, FacebookLoginProvider } from 'angularx-social-login';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -40,11 +40,11 @@ import {ContestService} from './_services/contest.service';
 const config = new AuthServiceConfig([
   {
     id: GoogleLoginProvider.PROVIDER_ID,
-    provider: new GoogleLoginProvider('465359889137-08nj2n2mk68escgfma54e4gca4et2059.apps.googleusercontent.com')
+    provider: new GoogleLoginProvider('Google-OAuth-Client-Id')
   },
   {
     id: FacebookLoginProvider.PROVIDER_ID,
-    provider: new FacebookLoginProvider('405068646590823')
+    provider: new FacebookLoginProvider('Facebook-App-Id')
   }
 ]);
 
