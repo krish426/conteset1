@@ -1,7 +1,7 @@
 var express= require ('express');
 var router = express.Router();
 var mongojs = require('mongojs');  
-var db =mongojs('mongodb://chamath:123456@ds239648.mlab.com:39648/contest-application',['contests']);
+var db =mongojs('mongodb://admin:dtc123@184.72.110.192:27017/contest',);
 
 
 //get all contests 
