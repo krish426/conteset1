@@ -41,7 +41,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var ContestService = (function () {
     function ContestService(http) {
         this.http = http;
-        this.apiparth = 'http://ec2-107-21-69-52.compute-1.amazonaws.com:9000/api/';
+        this.apiparth = 'http://ec2-54-164-100-220.compute-1.amazonaws.com:8081/api/';
     }
     ContestService.prototype.getContests = function () {
         return this.http.get(this.apiparth + 'contests')
@@ -284,11 +284,11 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var config = new __WEBPACK_IMPORTED_MODULE_6_angularx_social_login__["b" /* AuthServiceConfig */]([
     {
         id: __WEBPACK_IMPORTED_MODULE_6_angularx_social_login__["d" /* GoogleLoginProvider */].PROVIDER_ID,
-        provider: new __WEBPACK_IMPORTED_MODULE_6_angularx_social_login__["d" /* GoogleLoginProvider */]('465359889137-08nj2n2mk68escgfma54e4gca4et2059.apps.googleusercontent.com')
+        provider: new __WEBPACK_IMPORTED_MODULE_6_angularx_social_login__["d" /* GoogleLoginProvider */]('316931438630-7ualds2mvg3bohrct8ovpopnk84f4q4i.apps.googleusercontent.com')
     },
     {
         id: __WEBPACK_IMPORTED_MODULE_6_angularx_social_login__["c" /* FacebookLoginProvider */].PROVIDER_ID,
-        provider: new __WEBPACK_IMPORTED_MODULE_6_angularx_social_login__["c" /* FacebookLoginProvider */]('405068646590823')
+        provider: new __WEBPACK_IMPORTED_MODULE_6_angularx_social_login__["c" /* FacebookLoginProvider */]('200878077331434')
     }
 ]);
 function provideConfig() {
