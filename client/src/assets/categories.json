@@ -1,21 +1,9 @@
 [
-    {"name":"Background Music ","count":"0"},
-    {"name":"Banner Ad Design ","count":"0"},
-    {"name":"Brochure Design","count":"0"},
-    {"name":"Business card design","count":"0"},
-    {"name":"Document Writing","count":"0"},
-    {"name":"Logo design","count":"0"},
+    {"name":"Blockchain","count":"0"},
+    {"name":"Artificial intelligence ","count":"0"},
+    {"name":"BigData","count":"0"},
+    {"name":"Drone Technologies","count":"0"},
+    {"name":"Cloud Technologies","count":"0"},
     {"name":"Mobile App Design","count":"0"},
-    {"name":"New Contest","count":"0"},
-    {"name":"New contest New","count":"0"},
-    {"name":"Packaging Design ","count":"0"},
-    {"name":"Product package design ","count":"0"},
-    {"name":"Small Poster","count":"0"},
-    {"name":"Technical Logo Design","count":"0"},
-    {"name":"Themes Music","count":"0"},
-    {"name":"T-shirt Design","count":"0"},
-    {"name":"T-shirt design video","count":"0"},
-    {"name":"video contest","count":"0"},
-    {"name":"Website banners","count":"0"},
-    {"name":"Website design video","count":"0"}
-  ]
+    {"name":"Web designing","count":"0"},
+     ]
